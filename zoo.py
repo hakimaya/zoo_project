@@ -1,6 +1,3 @@
-
-
-
 class animal:
     def __init__(self,name,habitat,species,age,poids=None):
         self.name = name
@@ -10,7 +7,9 @@ class animal:
         self.poids = poids
         self.id = None
 count = 1
-animals = []
+animals = []        
+
+
 donnees_initiales = [
     ("Simba","Savane","Lion",5,190),
     ("Nala","Jungle","Tigre",3,None),
@@ -38,10 +37,12 @@ for name,habitat,species,age,poids in donnees_initiales:
     a.id = count
     animals.append(a)
     count += 1
+
 print("Chargement de animaux.csv...")
 lenG = len(animals)
 print(lenG ,"animeaux charges.")
 print()
+
 
 
 def add():
@@ -94,7 +95,7 @@ while 1:
                 print(f"{a.id:<5}{a.name:10}{a.species:<10}{a.age:<5}{a.habitat:<10}{a.poids:<5}")
             print()
         elif choix2 == 2:
-            animals_trie = sorted(animals, key=lambda a: a.name)
+            animals_trie = sorted(animals, key=lambda a: a.name.lower())
             print(f"{'Id':<5}{'Nom':10}{'Especes':<10}{'Age':<5}{'Habitat':<10}{'Poids':<5}")
             for a in animals_trie:
                 if a.poids is None:
@@ -193,8 +194,25 @@ while 1:
                             print(f"{a.id:<5}{a.name:<10}{a.species:<10}{a.age:<5}{a.habitat:<10}{a.poids:<5}")
                     if ys == 0:
                         print("Aucun animal trouve.")
-        
-
+    elif choix == 6:
+        print("=== Statistique ===")
+        print("Nombre total d'animaux: ",len(animals))
+        total = 0
+        for a in animals:
+            total += a.age
+        print("Age moyen:", round(total/len(animals),1))
+        oldest = max(animals, key=lambda a: a.age)
+        oldest_name = oldest.name
+        youngest = min(animals, key=lambda a: a.age)
+        youngest_name = youngest.name
+        print("Animal le plus vieux: ",oldest_name," (",oldest.age," ans)",sep="")
+        print("Animal le plus jeunes:",youngest_name," (",youngest.age," ans)",sep="")
+        espece_count = {}
+        for a in animals:
+            if a.species in espece_count:
+                espece_count[a.species] += 1
+            else:
+                espece_count[a.species] = 1
     elif choix == 0:
         print("Au revoir!")
         break
